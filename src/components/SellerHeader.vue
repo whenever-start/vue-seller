@@ -170,7 +170,7 @@ export default {
       .title {
         font-size: @size_title;
         font-weight: bold;
-        margin-left: 0.32rem;
+        margin-left: 0.12rem;
       }
 
       .text {

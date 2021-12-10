@@ -67,7 +67,9 @@
           </div>
 
           <!-- 加减控件 -->
-          <!-- <div class="controller"></div> -->
+          <div class="controller">
+            <Counter />
+          </div>
         </div>
       </div>
     </div>
@@ -76,9 +78,10 @@
 
 <script>
 import Brand from "./Brand.vue";
+import Counter from "components/Counter";
 import { typeName } from "assets/js/config";
 export default {
-  components: { Brand },
+  components: { Brand, Counter },
   data() {
     return {
       categoryIndex: 0,
@@ -193,13 +196,15 @@ export default {
 
   &-content {
     position: relative;
-    overflow-y: auto;
+    // overflow-y: auto;
+    overflow: auto;
     flex: 1 1 0%;
     background-color: #fff;
 
     .header {
       position: sticky;
       top: 0;
+      z-index: 1;
       line-height: 0.52rem;
       color: #9ea4a9;
       font-size: @size_text;
@@ -209,6 +214,7 @@ export default {
     }
 
     .box-content {
+      position: relative;
       padding: @space*1.5;
       border-bottom: 1px solid #e4e7ea;
       display: flex;
@@ -270,6 +276,13 @@ export default {
             transform: scale(0.5, 0.5) translateY(0.12rem);
           }
         }
+      }
+
+      .controller {
+        position: absolute;
+        bottom: 0.36rem;
+        right: 0.36rem;
+        background-color: pink;
       }
     }
   }

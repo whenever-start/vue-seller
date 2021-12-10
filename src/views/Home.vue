@@ -26,7 +26,7 @@
     </div>
 
     <div class="home-footer">
-      <SellerCounterBar />
+      <SellerCart />
     </div>
   </div>
 </template>
@@ -36,7 +36,7 @@ import SellerHeader from "components/SellerHeader";
 import SellerGoods from "components/SellerGoods";
 import SellerRatings from "components/SellerRatings";
 import SellerInfo from "components/SellerInfo";
-import SellerCounterBar from "components/SellerCounterBar";
+import SellerCart from "components/SellerCart";
 const data = require("../../data.json");
 
 export default {
@@ -46,7 +46,7 @@ export default {
     SellerGoods,
     SellerRatings,
     SellerInfo,
-    SellerCounterBar,
+    SellerCart,
   },
 
   data() {

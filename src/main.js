@@ -3,7 +3,12 @@ import App from "./App.vue";
 import router from "./router";
 import { Button, Icon, Popup, Rate } from "vant";
 import "vant/lib/index.less";
+
+// css
 import "assets/style/base.css";
+
+// 定义全局变量
+Vue.prototype.cartSet = []; // 购物车里的商品集合
 
 Vue.config.productionTip = false;
 

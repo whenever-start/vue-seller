@@ -1,5 +1,5 @@
 <template>
-  <div class="seller-counter-bar">counter bar</div>
+  <div class="seller-cart">counter bar</div>
 </template>
 
 <script>
