@@ -1,18 +1,22 @@
 <template>
   <div class="counter">
     <transition name="fade">
-      <i class="iconfont icon-jianshao" v-show="num > 0" @click="decrease"></i>
+      <i
+        class="iconfont icon-jianshao"
+        v-show="curCount > 0"
+        @click="decrease"
+      ></i>
     </transition>
-    <span class="count">{{ num }}</span>
+    <span class="count">{{ curCount }}</span>
     <i class="iconfont icon-zengjia" @click="increase" ref="incBall"></i>
 
     <!-- ball -->
     <ul class="box-balls">
       <transition-group>
         <li
-          v-for="(ball, index) in balls"
-          :key="index"
-          v-show="ball.show"
+          v-for="ball in balls"
+          :key="ball.num"
+          v-show="ball.show && isDrop"
           :style="{ bottom: ballBottom }"
         ></li>
       </transition-group>
@@ -24,17 +28,18 @@
 export default {
   data() {
     return {
-      num: this.count,
-      idx: 0,
+      curCount: this.count,
+      idx: 0, // 当前drop小球的 index
       ballBottom: "auto",
+      // num 是为了作为 key 值
       balls: [
-        { show: false },
-        { show: false },
-        { show: false },
-        { show: false },
-        { show: false },
-        { show: false },
-        { show: false },
+        { show: false, num: 1 },
+        { show: false, num: 2 },
+        { show: false, num: 3 },
+        { show: false, num: 4 },
+        { show: false, num: 5 },
+        { show: false, num: 6 },
+        { show: false, num: 7 },
       ],
     };
   },
@@ -43,25 +48,31 @@ export default {
       type: Number,
       default: 0,
     },
+    isDrop: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+  watch: {
+    count(newVal) {
+      this.curCount = newVal;
+    },
   },
 
   methods: {
     decrease() {
-      this.num = this.num === 0 ? 0 : this.num - 1;
+      // <= 0 return
+      if (this.curCount < 1) return;
+
+      this.curCount--;
+      this.$emit("get-count", this.curCount);
     },
     increase() {
-      this.num++;
-
+      this.curCount++;
       this.setBallBottom();
-
-      this.$nextTick(() => {
-        const idx = this.idx;
-        this.balls[this.idx].show = true;
-        setTimeout(() => {
-          this.balls[idx].show = false;
-        }, 300);
-        this.idx = this.idx === this.balls.length - 1 ? 0 : this.idx + 1;
-      });
+      this.ballDisplay();
+      this.$emit("get-count", this.curCount);
     },
 
     /**
@@ -71,6 +82,20 @@ export default {
       const h = document.body.offsetHeight;
       const top = this.$refs.incBall.getBoundingClientRect().top;
       this.ballBottom = h - top + "px";
+    },
+
+    /**
+     * 小球的显示与隐藏 -> 触发动画
+     */
+    ballDisplay() {
+      const idx = this.idx;
+      this.balls[this.idx].show = true;
+      // delay 值设置为比 css 动画中的 duration 小
+      // 如此, backwards 小球回到原位置时才能不显示
+      setTimeout(() => {
+        this.balls[idx].show = false;
+      }, 300);
+      this.idx = this.idx === this.balls.length - 1 ? 0 : this.idx + 1;
     },
   },
 };

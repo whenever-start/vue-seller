@@ -26,7 +26,7 @@
     </div>
 
     <div class="home-footer">
-      <SellerCart />
+      <SellerCart :seller="seller" />
     </div>
   </div>
 </template>
@@ -124,7 +124,7 @@ export default {
   }
 
   &-footer {
-    flex: 0 0 1rem;
+    flex: 0 0 0.96rem;
     background-color: #141d27;
   }
 }

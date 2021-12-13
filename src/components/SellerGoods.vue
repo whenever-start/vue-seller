@@ -34,41 +34,45 @@
 
         <div
           class="box-content"
-          v-for="(item, index) in category.foods"
+          v-for="(food, index) in category.foods"
           :key="index"
         >
           <div class="thumb">
-            <img :src="item.icon ? item.icon : item.image" :alt="item.name" />
+            <img :src="food.icon ? food.icon : food.image" :alt="food.name" />
           </div>
 
           <div class="text-container">
-            <div class="title">{{ item.name }}</div>
+            <div class="title">{{ food.name }}</div>
 
-            <div class="assist" v-if="item.description">
-              {{ item.description }}
+            <div class="assist" v-if="food.description">
+              {{ food.description }}
             </div>
 
             <div class="assist">
-              <span>月售{{ item.sellCount }}份</span>
-              <span>好评率{{ item.rating }}%</span>
+              <span>月售{{ food.sellCount }}份</span>
+              <span>好评率{{ food.rating }}%</span>
             </div>
 
             <div class="price">
               <span class="price-cur">
                 <span class="price-symbol">&yen;</span>
-                <span>{{ item.price }}</span>
+                <span>{{ food.price }}</span>
               </span>
 
-              <span class="price-old" v-if="item.oldPrice">
+              <span class="price-old" v-if="food.oldPrice">
                 <span class="price-symbol">&yen;</span>
-                <span>{{ item.oldPrice }}</span>
+                <span>{{ food.oldPrice }}</span>
               </span>
             </div>
           </div>
 
           <!-- 加减控件 -->
           <div class="controller">
-            <Counter />
+            <Counter
+              isDrop
+              :count="food.count"
+              @get-count="updateCount(arguments, food)"
+            />
           </div>
         </div>
       </div>
@@ -77,9 +81,11 @@
 </template>
 
 <script>
+import Vue from "vue";
 import Brand from "./Brand.vue";
 import Counter from "components/Counter";
 import { typeName } from "assets/js/config";
+import { state, mutations } from "store";
 export default {
   components: { Brand, Counter },
   data() {
@@ -89,6 +95,13 @@ export default {
       categoryOffsetTops: [], // tabItem 的 offsetTop 集合
     };
   },
+
+  computed: {
+    cartSet() {
+      return state.cartSet;
+    },
+  },
+
   props: {
     goods: {
       type: Array,
@@ -108,6 +121,8 @@ export default {
   },
 
   methods: {
+    updateCartSet: mutations.updateCartSet,
+
     getTypeName(type) {
       return typeName(type, 2);
     },
@@ -137,6 +152,17 @@ export default {
       // category 滚动
       this.$refs.categoryScroll.scrollTo(0, this.categoryOffsetTops[index]);
     },
+    /**
+     * 更新购物车
+     * @param {Array} args count = count
+     * @param {Object} item food = item
+     */
+    updateCount(args, food) {
+      const count = args[0];
+
+      Vue.set(food, "count", count);
+      this.updateCartSet(food, count);
+    },
   },
 };
 </script>
@@ -156,6 +182,9 @@ export default {
       position: relative;
       height: 100%;
       overflow-y: auto;
+      &::-webkit-scrollbar {
+        display: none;
+      }
 
       li {
         padding: 0 @space;
@@ -282,7 +311,6 @@ export default {
         position: absolute;
         bottom: 0.36rem;
         right: 0.36rem;
-        background-color: pink;
       }
     }
   }
