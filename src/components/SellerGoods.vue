@@ -1,5 +1,6 @@
 <template>
   <div class="seller-goods">
+    <!-- aside -->
     <div class="seller-goods-aside">
       <ul class="nav" ref="categoryScroll">
         <li
@@ -24,6 +25,7 @@
       </ul>
     </div>
 
+    <!-- content -->
     <div class="seller-goods-content" ref="contentScroll" @scroll="onscroll">
       <div
         class="seller-goods-content-item"
@@ -36,6 +38,7 @@
           class="box-content"
           v-for="(food, index) in category.foods"
           :key="index"
+          @click="toFood(food)"
         >
           <div class="thumb">
             <img :src="food.icon ? food.icon : food.image" :alt="food.name" />
@@ -77,36 +80,35 @@
         </div>
       </div>
     </div>
+
+    <!-- food: fixed -> 整个页面 -->
+    <Food :food="selectedFood" v-show="foodShow" v-model="foodShow" />
   </div>
 </template>
 
 <script>
-import Vue from "vue";
+// import Vue from "vue";
 import Brand from "./Brand.vue";
 import Counter from "components/Counter";
+import Food from "components/Food";
 import { typeName } from "assets/js/config";
 import { state, mutations } from "store";
+
 export default {
-  components: { Brand, Counter },
+  components: { Brand, Counter, Food },
   data() {
     return {
       categoryIndex: 0,
       contentOffsetTops: [], // stickyHeader 的 offsetTop 集合
       categoryOffsetTops: [], // tabItem 的 offsetTop 集合
+      foodShow: false,
+      selectedFood: {},
     };
   },
 
   computed: {
-    cartSet() {
-      return state.cartSet;
-    },
-  },
-
-  props: {
-    goods: {
-      type: Array,
-      required: true,
-    },
+    cartSet: () => state.cartSet,
+    goods: () => state.goods,
   },
 
   mounted() {
@@ -143,25 +145,26 @@ export default {
       const index =
         scrollTop >= lastScrollTop
           ? this.contentOffsetTops.length - 1
-          : this.contentOffsetTops.findIndex(
-              (value, idx) => value > scrollTop
-            ) - 1;
+          : this.contentOffsetTops.findIndex((value) => value > scrollTop) - 1;
 
       this.categoryIndex = index;
 
       // category 滚动
       this.$refs.categoryScroll.scrollTo(0, this.categoryOffsetTops[index]);
     },
+
     /**
      * 更新购物车
      * @param {Array} args count = count
      * @param {Object} item food = item
      */
     updateCount(args, food) {
-      const count = args[0];
+      this.updateCartSet(food, args[0]);
+    },
 
-      Vue.set(food, "count", count);
-      this.updateCartSet(food, count);
+    toFood(food) {
+      this.selectedFood = food;
+      this.foodShow = true;
     },
   },
 };
@@ -174,6 +177,7 @@ export default {
   height: 100%;
   display: flex;
 
+  // seller-goods-aside
   &-aside {
     flex: 0 0 1.6rem;
     height: 100%;
@@ -223,6 +227,7 @@ export default {
     }
   }
 
+  // seller-goods-content
   &-content {
     position: relative;
     // overflow-y: auto;

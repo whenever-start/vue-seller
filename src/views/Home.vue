@@ -1,9 +1,11 @@
 <template>
   <div class="home">
+    <!-- header -->
     <div class="home-header">
-      <SellerHeader :seller="seller" />
+      <SellerHeader />
     </div>
 
+    <!-- content -->
     <div class="home-content">
       <div class="home-content-tab">
         <ul class="tab">
@@ -19,14 +21,15 @@
       </div>
 
       <div class="home-content-main">
-        <SellerGoods v-show="curTab === 'SellerGoods'" :goods="goods" />
+        <SellerGoods v-show="curTab === 'SellerGoods'" />
         <SellerRatings v-show="curTab === 'SellerRatings'" />
         <SellerInfo v-show="curTab === 'SellerInfo'" />
       </div>
     </div>
 
+    <!-- footer -->
     <div class="home-footer">
-      <SellerCart :seller="seller" />
+      <SellerCart />
     </div>
   </div>
 </template>
@@ -37,6 +40,7 @@ import SellerGoods from "components/SellerGoods";
 import SellerRatings from "components/SellerRatings";
 import SellerInfo from "components/SellerInfo";
 import SellerCart from "components/SellerCart";
+import { mutations } from "store";
 const data = require("../../data.json");
 
 export default {
@@ -52,21 +56,25 @@ export default {
   data() {
     return {
       curTab: "SellerGoods",
-      goods: data.goods,
-      seller: data.seller,
-      ratings: data.ratings,
       tabs: ["商品", "评价", "商家"],
       tabIndex: 0,
     };
   },
 
   created() {
-    console.log("goods:", this.goods);
-    console.log("seller:", this.seller);
-    console.log("ratings:", this.ratings);
+    this.setGoods(data.goods);
+    this.setSeller(data.seller);
+    this.setRatings(data.ratings);
+    console.log("goods:", data.goods);
+    console.log("seller:", data.seller);
+    console.log("ratings:", data.ratings);
   },
 
   methods: {
+    setGoods: mutations.setGoods,
+    setSeller: mutations.setSeller,
+    setRatings: mutations.setRatings,
+
     switchTab(index) {
       const moduleNames = ["SellerGoods", "SellerRatings", "SellerInfo"];
       this.tabIndex = index;
@@ -77,26 +85,32 @@ export default {
 </script>
 <style lang="less">
 @import "~assets/style/var.less";
+
 .home {
   height: 100%;
   display: flex;
   flex-direction: column;
 
+  // home-header
   &-header {
     flex: 0 0 auto;
     background-color: rgba(7, 17, 27, 0.5);
     overflow: hidden;
   }
 
+  // home-content
   &-content {
     overflow-y: scroll;
     flex: 1 1 0%;
     display: flex;
     flex-direction: column;
+    background-color: @gray;
     // overflow: hidden;
 
     &-tab {
       flex: 0 0 0.8rem;
+      background-color: @white;
+      border-bottom: 1px solid #e6e7e8;
 
       .tab {
         height: 100%;
@@ -123,6 +137,7 @@ export default {
     }
   }
 
+  // home-footer
   &-footer {
     flex: 0 0 0.96rem;
     background-color: #141d27;

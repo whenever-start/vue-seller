@@ -1,11 +1,15 @@
 <template>
   <div class="seller-cart">
+    <!-- bar -->
     <div class="seller-cart-bar" @click="openPopup">
       <!-- left -->
       <div class="seller-cart-bar-left">
         <div class="box-icon" :class="cartSet.length ? 'active' : ''">
+          <div class="badge" v-show="totalCount > 0">{{ totalCount }}</div>
+
           <i class="iconfont icon-gouwuche"></i>
         </div>
+
         <div class="price" :class="cartSet.length ? 'active' : ''">
           &yen; {{ totalPrice }}
         </div>
@@ -27,18 +31,21 @@
     </div>
 
     <!-- popup -->
-    <van-overlay :show="show" @click="show = false">
+    <van-overlay :show="show" @click="show = !show">
       <transition name="popup-slide-bottom">
         <div class="box-cart-list" v-show="show" ref="popupContent" @click.stop>
           <div class="cart-list-header">
             <span>购物车</span>
+
             <span class="cart-list-header--blue" @click="empty">清空</span>
           </div>
           <ul class="cart-list">
             <li class="cart-list-item" v-for="food in cartSet" :key="food.name">
               <div class="item-left">{{ food.name }}</div>
+
               <div class="item-right">
                 <span class="price">&yen;{{ food.count * food.price }}</span>
+
                 <Counter
                   :count="food.count"
                   @get-count="updateCount(arguments, food)"
@@ -65,21 +72,22 @@ export default {
       show: false,
     };
   },
-  props: {
-    seller: {
-      type: Object,
-      required: true,
-    },
-  },
   computed: {
-    cartSet() {
-      return state.cartSet;
-    },
+    cartSet: () => state.cartSet,
+    seller: () => state.seller,
+
     totalPrice() {
       return this.cartSet.reduce(function (acc, food) {
         return acc + food.count * food.price;
       }, 0);
     },
+
+    totalCount() {
+      return this.cartSet.reduce(function (acc, food) {
+        return acc + food.count;
+      }, 0);
+    },
+
     payText() {
       const totalPrice = this.totalPrice;
       const minPrice = this.seller.minPrice;
@@ -92,6 +100,7 @@ export default {
       }
     },
   },
+
   watch: {
     cartSet(newVal) {
       if (newVal.length === 0) {
@@ -102,14 +111,17 @@ export default {
   methods: {
     updateCartSet: mutations.updateCartSet,
     emptyCarSet: mutations.emptyCarSet,
+
     openPopup() {
       if (!this.cartSet.length) return;
       this.show = !this.show;
     },
+
     updateCount(args, food) {
       const count = args[0];
       this.updateCartSet(food, count);
     },
+
     pay() {
       if (this.totalPrice < this.seller.minPrice) return;
       this.$dialog({
@@ -117,6 +129,7 @@ export default {
         message: `您需要支付${this.totalPrice}元`,
       });
     },
+
     empty() {
       this.$dialog
         .confirm({
@@ -132,12 +145,19 @@ export default {
 
 <style lang="less" scoped>
 @import "~assets/style/var.less";
+
 .seller-cart {
   color: rgba(255, 255, 255, 0.4);
   font-size: 0.24rem;
   line-height: 0.96rem;
   text-align: center;
 
+  // 使在 Food.vue 页面也能看见购物车列表
+  .van-overlay {
+    z-index: 1000;
+  }
+
+  // seller-cart-bar
   &-bar {
     position: relative;
     z-index: 1999;
@@ -170,6 +190,19 @@ export default {
         line-height: 1.12rem;
         border-radius: 50%;
         background-color: #131d26;
+
+        .badge {
+          position: absolute;
+          top: 2px;
+          right: 2px;
+          width: 0.32rem;
+          height: 0.32rem;
+          line-height: 0.32rem;
+          border-radius: 50%;
+          background-color: @red;
+          color: @white;
+          font-size: @size_assist;
+        }
 
         i {
           padding: 0.2rem;
@@ -250,6 +283,8 @@ export default {
 
     .cart-list {
       background-color: @white;
+      max-height: 5rem;
+      overflow: auto;
 
       &-item {
         display: flex;

@@ -1,14 +1,20 @@
 <template>
+  <!-- 使用
+    <Counter :count="count" @get-count="..."/>
+    参数: isDrop -- 是否显示小球掉落 默认 false
+  -->
   <div class="counter">
     <transition name="fade">
       <i
         class="iconfont icon-jianshao"
         v-show="curCount > 0"
-        @click="decrease"
+        @click.stop="decrease"
       ></i>
     </transition>
+
     <span class="count">{{ curCount }}</span>
-    <i class="iconfont icon-zengjia" @click="increase" ref="incBall"></i>
+
+    <i class="iconfont icon-zengjia" @click.stop="increase" ref="incBall"></i>
 
     <!-- ball -->
     <ul class="box-balls">
@@ -43,6 +49,7 @@ export default {
       ],
     };
   },
+
   props: {
     count: {
       type: Number,
@@ -158,7 +165,7 @@ export default {
 @keyframes drop-left {
   to {
     left: 0.48rem;
-    opacity: 0;
+    // opacity: 0;
   }
 }
 @keyframes drop-top {

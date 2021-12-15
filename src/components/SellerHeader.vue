@@ -1,6 +1,7 @@
 <template>
   <div class="seller-header">
     <div @click="show = !show">
+      <!-- content -->
       <div class="seller-header-content clearfix">
         <div class="thumb"><img :src="seller.avatar" alt="" /></div>
 
@@ -31,6 +32,7 @@
         ></div>
       </div>
 
+      <!-- footer -->
       <div class="seller-header-footer">
         <Brand name="bulletin" />
         <p class="van-ellipsis">{{ seller.bulletin }}</p>
@@ -53,7 +55,8 @@
           <div class="promo-rate">
             <van-rate
               v-model="seller.score"
-              color="#ff9900"
+              disabled-color="#ff9900"
+              disabled
               size=".48rem"
               gutter=".42rem"
             />
@@ -68,7 +71,7 @@
                 <li v-for="(item, index) in seller.supports" :key="index">
                   <Brand
                     class="icon"
-                    :name="getTypeName(item.type)"
+                    :name="typeName(item.type, 2)"
                     width=".32rem"
                     height=".32rem"
                   />
@@ -98,6 +101,7 @@
 
 <script>
 import { typeName } from "assets/js/config";
+import { state } from "store";
 import Brand from "components/Brand";
 
 export default {
@@ -110,31 +114,21 @@ export default {
     };
   },
 
-  props: {
-    seller: {
-      type: Object,
-      required: true,
-      default: function () {
-        return {};
-      },
-    },
-  },
-
-  created() {
-    console.log(window.devicePixelRatio);
+  computed: {
+    seller: () => state.seller,
   },
 
   methods: {
-    getTypeName(type) {
-      return typeName(type, 2);
-    },
+    typeName: typeName,
   },
 };
 </script>
 
 <style lang="less">
 @import "~assets/style/var.less";
+
 .seller-header {
+  // seller-header-content
   &-content {
     position: relative;
     padding: @space*1.5;
@@ -209,6 +203,7 @@ export default {
     }
   }
 
+  // seller-header-footer
   &-footer {
     padding: 0 @space;
     height: 0.56rem;
@@ -228,13 +223,14 @@ export default {
     }
   }
 
-  // van-popup
+  // van-popup 调整关闭按钮位置
   .van-popup__close-icon {
     bottom: 0.64rem;
     left: 50%;
     transform: translateX(-50%);
   }
 
+  // 弹出框内容
   .section-promo {
     position: relative;
     box-sizing: border-box;

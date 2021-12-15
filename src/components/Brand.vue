@@ -1,9 +1,18 @@
 <template>
+  <!-- 使用:
+    1: 24px + 非实心背景
+    2: 32px + 非实心背景
+    3: 24px + 实心背景
+    4: 32px + 实心背景
+    <Brand :name="typeName(support.type, 4)" />
+  -->
   <i class="brand" :style="spiritStyle"></i>
 </template>
 
 <script>
 export default {
+  name: "Brand",
+
   data() {
     return {
       nameMap2x: {
@@ -322,6 +331,7 @@ export default {
       },
     };
   },
+
   props: {
     width: {
       type: [String, Number],
@@ -334,11 +344,11 @@ export default {
       required: true,
     },
   },
+
   computed: {
     spiritStyle() {
       const nameMap =
         window.devicePixelRatio === 2 ? this.nameMap2x : this.nameMap3x;
-      // console.log("map:", map);
       const curBrand = nameMap[this.name];
 
       // width height scale
@@ -355,6 +365,7 @@ export default {
       const baseWidth = 6;
       const baseHeight = window.devicePixelRatio === 2 ? 1.25 : 1.61;
       const size = `${baseWidth * scale}rem ${baseHeight * scale}rem`;
+
       return {
         width: width + "rem",
         height: height + "rem",

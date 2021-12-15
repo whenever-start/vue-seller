@@ -54,3 +54,10 @@ em {
 .hidden {
   display: none;
 }
+
+/* 当文本内容长度超过容器最大宽度时，自动省略多余的文本。 */
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
