@@ -1,5 +1,7 @@
 # vue-seller
 
+[示例](https://whenever-start.github.io/vue-seller/)
+
 ## 做什么？
 
 模仿饿了么卖家模块。
