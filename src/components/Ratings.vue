@@ -110,7 +110,7 @@
 
 <script>
 export default {
-  name: "Ratings",
+  name: 'Ratings',
 
   data() {
     return {
@@ -135,15 +135,15 @@ export default {
     tabs() {
       return [
         {
-          name: "全部",
+          name: '全部',
           content: this.allRatings,
         },
         {
-          name: this.simple ? "推荐" : "满意",
+          name: this.simple ? '推荐' : '满意',
           content: this.goodRatings,
         },
         {
-          name: this.simple ? "吐槽" : "不满意",
+          name: this.simple ? '吐槽' : '不满意',
           content: this.badRatings,
         },
       ];
@@ -171,37 +171,37 @@ export default {
       const year = myDate.getFullYear();
       const month =
         myDate.getMonth() + 1 < 10
-          ? "0" + (myDate.getMonth() + 1)
+          ? '0' + (myDate.getMonth() + 1)
           : myDate.getMonth() + 1;
       const day =
-        myDate.getDate() < 10 ? "0" + myDate.getDate() : myDate.getDate();
+        myDate.getDate() < 10 ? '0' + myDate.getDate() : myDate.getDate();
       const hour =
-        myDate.getHours() < 10 ? "0" + myDate.getHours() : myDate.getHours();
+        myDate.getHours() < 10 ? '0' + myDate.getHours() : myDate.getHours();
       const minutes =
         myDate.getMinutes() < 10
-          ? "0" + myDate.getMinutes()
+          ? '0' + myDate.getMinutes()
           : myDate.getMinutes();
       const seconds =
         myDate.getSeconds() < 10
-          ? "0" + myDate.getSeconds()
+          ? '0' + myDate.getSeconds()
           : myDate.getSeconds();
       return (
         year +
-        "-" +
+        '-' +
         month +
-        "-" +
+        '-' +
         day +
-        " " +
+        ' ' +
         hour +
-        ":" +
+        ':' +
         minutes +
-        ":" +
+        ':' +
         seconds
       );
     },
     // 1小时30分钟送达
     formatTime(min) {
-      if (!min) return "";
+      if (!min) return '';
       const h = parseInt(min / 60);
       if (h) {
         return `${h}小时${min % 60}分钟送达`;

@@ -50,11 +50,13 @@
 </template>
 
 <script>
-import Ratings from "components/Ratings";
-import { state } from "store";
+import Ratings from 'components/Ratings';
+// import Ratings from '@/components/Ratings';
+// import Ratings from './Ratings.vue';
+import { state } from 'store';
 
 export default {
-  name: "SellerRatings",
+  name: 'SellerRatings',
 
   components: { Ratings },
 
@@ -77,7 +79,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "~assets/style/var.less";
+@import '~assets/style/var.less';
 
 .seller-ratings {
   &-header {
@@ -94,7 +96,7 @@ export default {
       font-size: @size_text;
 
       &::after {
-        content: "";
+        content: '';
         position: absolute;
         top: 50%;
         transform: translateY(-50%);

@@ -36,7 +36,7 @@ export default {
     return {
       curCount: this.count,
       idx: 0, // 当前drop小球的 index
-      ballBottom: "auto",
+      ballBottom: 'auto',
       // num 是为了作为 key 值
       balls: [
         { show: false, num: 1 },
@@ -73,13 +73,13 @@ export default {
       if (this.curCount < 1) return;
 
       this.curCount--;
-      this.$emit("get-count", this.curCount);
+      this.$emit('get-count', this.curCount);
     },
     increase() {
       this.curCount++;
       this.setBallBottom();
       this.ballDisplay();
-      this.$emit("get-count", this.curCount);
+      this.$emit('get-count', this.curCount);
     },
 
     /**
@@ -88,7 +88,7 @@ export default {
     setBallBottom() {
       const h = document.body.offsetHeight;
       const top = this.$refs.incBall.getBoundingClientRect().top;
-      this.ballBottom = h - top + "px";
+      this.ballBottom = h - top + 'px';
     },
 
     /**

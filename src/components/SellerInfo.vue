@@ -103,12 +103,12 @@
 </template>
 
 <script>
-import { state } from "store";
-import Brand from "components/Brand";
-import { typeName } from "assets/js/config";
+import { state } from 'store';
+import Brand from 'components/Brand';
+import { typeName } from 'assets/js/config';
 
 export default {
-  name: "SellerInfo",
+  name: 'SellerInfo',
 
   components: { Brand },
 

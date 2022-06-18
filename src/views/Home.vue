@@ -35,16 +35,16 @@
 </template>
 
 <script>
-import SellerHeader from "components/SellerHeader";
-import SellerGoods from "components/SellerGoods";
-import SellerRatings from "components/SellerRatings";
-import SellerInfo from "components/SellerInfo";
-import SellerCart from "components/SellerCart";
-import { mutations } from "store";
-const data = require("../../data.json");
+import SellerHeader from 'components/SellerHeader';
+import SellerGoods from 'components/SellerGoods';
+import SellerRatings from 'components/SellerRatings';
+import SellerInfo from 'components/SellerInfo';
+import SellerCart from 'components/SellerCart';
+import { mutations } from 'store';
+const data = require('../../data.json');
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
     SellerHeader,
     SellerGoods,
@@ -55,8 +55,8 @@ export default {
 
   data() {
     return {
-      curTab: "SellerGoods",
-      tabs: ["商品", "评价", "商家"],
+      curTab: 'SellerGoods',
+      tabs: ['商品', '评价', '商家'],
       tabIndex: 0,
     };
   },
@@ -65,9 +65,9 @@ export default {
     this.setGoods(data.goods);
     this.setSeller(data.seller);
     this.setRatings(data.ratings);
-    console.log("goods:", data.goods);
-    console.log("seller:", data.seller);
-    console.log("ratings:", data.ratings);
+    console.log('goods:', data.goods);
+    console.log('seller:', data.seller);
+    console.log('ratings:', data.ratings);
   },
 
   methods: {
@@ -76,7 +76,7 @@ export default {
     setRatings: mutations.setRatings,
 
     switchTab(index) {
-      const moduleNames = ["SellerGoods", "SellerRatings", "SellerInfo"];
+      const moduleNames = ['SellerGoods', 'SellerRatings', 'SellerInfo'];
       this.tabIndex = index;
       this.curTab = moduleNames[index];
     },

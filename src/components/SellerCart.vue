@@ -60,10 +60,10 @@
 </template>
 
 <script>
-import Counter from "components/Counter";
-import { state, mutations } from "store";
+import Counter from 'components/Counter';
+import { state, mutations } from 'store';
 export default {
-  name: "SellerCart",
+  name: 'SellerCart',
   components: {
     Counter,
   },
@@ -96,7 +96,7 @@ export default {
       } else if (totalPrice < minPrice && totalPrice > 0) {
         return `还差￥${minPrice - totalPrice}起送`;
       } else {
-        return "去结算";
+        return '去结算';
       }
     },
   },
@@ -125,7 +125,7 @@ export default {
     pay() {
       if (this.totalPrice < this.seller.minPrice) return;
       this.$dialog({
-        title: "支付",
+        title: '支付',
         message: `您需要支付${this.totalPrice}元`,
       });
     },
@@ -133,7 +133,7 @@ export default {
     empty() {
       this.$dialog
         .confirm({
-          message: "确认要清空?",
+          message: '确认要清空?',
         })
         .then(() => {
           this.emptyCarSet();
@@ -144,7 +144,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "~assets/style/var.less";
+@import '~assets/style/var.less';
 
 .seller-cart {
   color: rgba(255, 255, 255, 0.4);
@@ -195,10 +195,10 @@ export default {
           position: absolute;
           top: 2px;
           right: 2px;
-          width: 0.32rem;
+          padding: 0 0.08rem;
           height: 0.32rem;
           line-height: 0.32rem;
-          border-radius: 50%;
+          border-radius: 0.32rem;
           background-color: @red;
           color: @white;
           font-size: @size_assist;
@@ -232,7 +232,7 @@ export default {
       }
 
       &::after {
-        content: "";
+        content: '';
         position: absolute;
         right: 0;
         top: 50%;
@@ -269,6 +269,8 @@ export default {
     color: #07111b;
     font-size: @size_text;
     transition: 0.2s ease-out;
+    background-color: @white;
+    overflow-y: auto;
 
     .cart-list-header {
       display: flex;
@@ -282,9 +284,7 @@ export default {
     }
 
     .cart-list {
-      background-color: @white;
       max-height: 5rem;
-      overflow: auto;
 
       &-item {
         display: flex;

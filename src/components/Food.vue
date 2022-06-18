@@ -55,7 +55,7 @@
       </div>
 
       <!-- introduction -->
-      <div class="food-mod-wrap">
+      <div class="food-mod-wrap" v-if="food.info">
         <div class="food-introduction">
           <div class="food-mod-wrap-head">商品介绍</div>
           <p class="food-introduction-text">{{ food.info }}</p>
@@ -74,12 +74,12 @@
 </template>
 
 <script>
-import Counter from "components/Counter";
-import Ratings from "components/Ratings";
-import { state, mutations } from "store";
+import Counter from 'components/Counter';
+import Ratings from 'components/Ratings';
+import { state, mutations } from 'store';
 
 export default {
-  name: "Food",
+  name: 'Food',
 
   components: {
     Counter,
@@ -120,7 +120,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "~assets/style/var.less";
+@import '~assets/style/var.less';
 
 .food {
   position: fixed;

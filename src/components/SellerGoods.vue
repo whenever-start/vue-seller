@@ -36,8 +36,8 @@
 
         <div
           class="box-content"
-          v-for="(food, index) in category.foods"
-          :key="index"
+          v-for="(food, idx) in category.foods"
+          :key="idx"
           @click="toFood(food)"
         >
           <div class="thumb">
@@ -88,11 +88,11 @@
 
 <script>
 // import Vue from "vue";
-import Brand from "./Brand.vue";
-import Counter from "components/Counter";
-import Food from "components/Food";
-import { typeName } from "assets/js/config";
-import { state, mutations } from "store";
+import Brand from './Brand.vue';
+import Counter from 'components/Counter';
+import Food from 'components/Food';
+import { typeName } from 'assets/js/config';
+import { state, mutations } from 'store';
 
 export default {
   components: { Brand, Counter, Food },
@@ -171,7 +171,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "~assets/style/var.less";
+@import '~assets/style/var.less';
 
 .seller-goods {
   height: 100%;
@@ -191,7 +191,9 @@ export default {
       }
 
       li {
+        position: relative;
         padding: 0 @space;
+        // z-index: 1000;
         background-color: #f3f5f7;
 
         &.active {

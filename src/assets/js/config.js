@@ -1,4 +1,4 @@
-const types = ["decrease", "discount", "special", "invoice", "guarantee"];
+const types = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
 /**
  * typeName(0,1) => decrease_1
  * 作用: 用于 Brand 组件的 icon 名
@@ -7,5 +7,5 @@ const types = ["decrease", "discount", "special", "invoice", "guarantee"];
  * @returns Brand name
  */
 export const typeName = (type, size) => {
-  return types[type] + "_" + size;
+  return types[type] + '_' + size;
 };

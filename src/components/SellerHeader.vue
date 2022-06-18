@@ -100,9 +100,9 @@
 </template>
 
 <script>
-import { typeName } from "assets/js/config";
-import { state } from "store";
-import Brand from "components/Brand";
+import { typeName } from 'assets/js/config';
+import { state } from 'store';
+import Brand from 'components/Brand';
 
 export default {
   components: {
@@ -125,7 +125,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "~assets/style/var.less";
+@import '~assets/style/var.less';
 
 .seller-header {
   // seller-header-content
@@ -268,7 +268,7 @@ export default {
 
           &::before,
           &::after {
-            content: "";
+            content: '';
             position: absolute;
             height: 2px;
             width: 2.24rem;
@@ -324,11 +324,11 @@ export default {
             max-height: 3rem;
             overflow: hidden;
             // 多出省略
-            // display: -webkit-box;
-            // overflow: hidden;
-            // text-overflow: ellipsis;
-            // -webkit-line-clamp: 6;
-            // -webkit-box-orient: vertical;
+            display: -webkit-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 6;
+            -webkit-box-orient: vertical;
           }
         }
       }
